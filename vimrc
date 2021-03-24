@@ -62,6 +62,9 @@ noremap <LEADER><CR> :nohlsearch<CR>
 " Open lazygit
 noremap <C-g> :term lazygit<CR>
 
+" fuzzy finder
+noremap <C-f> :FZF<CR>
+
 map sh :set nosplitright<CR>:vsplit<CR>
 map sj :set splitbelow<CR>:split<CR>
 map sk :set nosplitbelow<CR>:split<CR>
@@ -95,5 +98,8 @@ map <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
