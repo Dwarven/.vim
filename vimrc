@@ -131,6 +131,11 @@ noremap = nzz
 noremap - Nzz
 noremap <LEADER><CR> :nohlsearch<CR>
 
+" buffer
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprev<CR>
+nnoremap <leader>q :bdelete<CR>
+
 " Open lazygit
 noremap <C-g> :term lazygit<CR>
 
