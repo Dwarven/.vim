@@ -192,11 +192,28 @@ let NERDTreeMapUpdir = ""
 let NERDTreeMapUpdirKeepOpen = "h"
 let NERDTreeMapOpenSplit = ""
 let NERDTreeOpenVSplit = ""
-let NERDTreeMapActivateNode = "i"
-let NERDTreeMapOpenInTab = "o"
+let NERDTreeMapActivateNode = "o"
+let NERDTreeMapOpenInTab = "\\"
+let NERDTreeMapOpenInTabSilent = "i"
 let NERDTreeMapPreview = ""
 let NERDTreeMapCloseDir = "n"
 let NERDTreeMapChangeRoot = "l"
+
+" 智能回车：只对文件生效，文件夹保持原有行为
+autocmd FileType nerdtree nnoremap <buffer> <CR> :call SmartNERDTreeEnter()<CR>
+
+function! SmartNERDTreeEnter()
+    let currentNode = g:NERDTreeFileNode.GetSelected()
+    if currentNode != {}
+        if currentNode.path.isDirectory
+            " 文件夹：使用 o 键的功能（展开/折叠）
+            call feedkeys("o")
+        else
+            " 文件：在新标签页中打开
+            call feedkeys("itttl")
+        endif
+    endif
+endfunction
 
 " NERDTree Git
 let g:NERDTreeGitStatusIndicatorMapCustom = {
