@@ -70,10 +70,12 @@ set backspace=indent,eol,start
 " 代码收起
 set foldmethod=indent
 
-" 让光标插入模式和普通模式不一样
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" 设置不同模式下的光标形状
+if &term =~ 'xterm'
+  let &t_SI = "\e[6 q"   " 插入模式：细条光标
+  let &t_EI = "\e[2 q"   " 普通模式：方块光标
+  let &t_SR = "\e[4 q"   " 替换模式：下划线
+endif
 
 " 状态栏高度
 set laststatus=2
