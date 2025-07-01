@@ -42,6 +42,9 @@ filetype plugin indent on
 " 提高某些终端 vim 配色的兼容性
 let &t_ut=''
 
+" Visual 模式下将选中内容复制到系统剪贴板
+vnoremap Y "+y
+
 " 启用鼠标操作
 set mouse=a
 
@@ -90,7 +93,7 @@ set nofoldenable
 set number
 
 " 显示相对行号
-set norelativenumber
+set relativenumber
 
 " 光标线
 set cursorline
@@ -118,6 +121,15 @@ set ignorecase
 
 " 搜索时优先匹配大小写
 set smartcase
+
+silent !mkdir -p $HOME/.vim/.tmp/backup
+silent !mkdir -p $HOME/.vim/.tmp/undo
+set backupdir=$HOME/.vim/.tmp/backup,.
+set directory=$HOME/.vim/.tmp/backup,.
+if has('persistent_undo')
+  set undofile
+  set undodir=$HOME/.vim/.tmp/undo,.
+endif
 
 command! JsonFormat :execute '%!python -m json.tool'
   \ | :execute '%!python -c "import re,sys;chr=__builtins__.__dict__.get(\"unichr\", chr);sys.stdout.write(re.sub(r\"\\\\u[0-9a-f]{4}\", lambda x: chr(int(\"0x\" + x.group(0)[2:], 16)).encode(\"utf-8\"), sys.stdin.read()))"'
@@ -230,9 +242,19 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ }
 
 " Undotree
-let g:undotree_DiffAutoOpen = 0
-map L :UndotreeToggle<CR><C-w>h
-" map L :UndotreeToggle<CR>
+noremap L :UndotreeToggle<CR>
+let g:undotree_DiffAutoOpen = 1
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_ShortIndicators = 1
+let g:undotree_WindowLayout = 2
+let g:undotree_DiffpanelHeight = 8
+let g:undotree_SplitWidth = 24
+function g:Undotree_CustomMap()
+  nmap <buffer> k <plug>UndotreeNextState
+  nmap <buffer> j <plug>UndotreePreviousState
+  nmap <buffer> K 5<plug>UndotreeNextState
+  nmap <buffer> J 5<plug>UndotreePreviousState
+endfunc
 
 " vim-instant-markdown
 " let g:instant_markdown_slow = 0
